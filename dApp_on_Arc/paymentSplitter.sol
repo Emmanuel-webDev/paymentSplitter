@@ -58,15 +58,15 @@ contract Payer {
         );
 
         amountToSplit = (userBalance[msg.sender] * totalPercent) / 100;
-        userBalance[msg.sender] -= amountToSplit;
 
         //Fund distributor loop
-        for (uint i = 0; i <= recipents.length; i++) {
+        for (uint i = 0; i < recipents.length; i++) {
             uint256 amount = (userBalance[msg.sender] * percents[i]) / 100;
 
             if (amount > 0) {
                 token.safeTransfer(recipents[i], amount);
             }
         }
+        userBalance[msg.sender] -= amountToSplit;
     }
 }
