@@ -6,19 +6,18 @@ import "@openzeppelin/contracts/access/Ownable.sol"; // Recommended for setting 
 
 contract Payer {
     using SafeERC20 for IERC20;
+    IERC20 public token = IERC20(0x3600000000000000000000000000000000000000);
+
+    uint256 public constant MAX_APPROVAL = 100000000;
 
     uint public minDeposit = 0.5 * 10 ** 6; // Set for 6 decimals (USDC standard)
-    IERC20 public immutable token =
-        IERC20(0x3600000000000000000000000000000000000000); // USDC token address for arc
+    
     mapping(address => uint) public userBalance;
-    uint public amountToSplit;
+    uint public amountToSplit = 0;
 
     //Deposit to contract
     function deposit(uint _amount) public payable {
-        require(
-            _amount >= minDeposit,
-            "Deposit must be greater than minDeposit"
-        );
+        require(_amount >= minDeposit, "Deposit must be greater than minDeposit");
         token.safeTransferFrom(msg.sender, address(this), _amount);
         userBalance[msg.sender] += _amount;
     }
@@ -36,35 +35,22 @@ contract Payer {
     }
 
     //Funds splitter
-    function splitFunds(
-        address payable[] memory recipents,
-        uint32[] memory percents
-    ) public payable {
+    function splitFunds(address payable[] memory recipents, uint32[] memory percents) public payable {
         require(userBalance[msg.sender] > 0, "Insufficient balance to split");
-        require(
-            recipents.length == percents.length,
-            "Recipents and percents must be the same length"
-        );
+        require(recipents.length == percents.length, "Recipents and percents must be the same length");
         require(recipents.length > 0, "Recipents must be greater than 0");
         require(percents.length > 0, "Percents must be greater than 0");
 
-        uint32 totalPercent = 0;
+    
         for (uint i = 0; i < percents.length; i++) {
-            totalPercent += percents[i];
+            amountToSplit += percents[i];
         }
-        require(
-            totalPercent <= 100,
-            "Total percent must be less than or equal to 100"
-        );
-
-        amountToSplit = (userBalance[msg.sender] * totalPercent) / 100;
 
         //Fund distributor loop
         for (uint i = 0; i < recipents.length; i++) {
-            uint256 amount = (userBalance[msg.sender] * percents[i]) / 100;
 
-            if (amount > 0) {
-                token.safeTransfer(recipents[i], amount);
+            if (percents[i] > 0) {
+                token.safeTransfer(recipents[i], percents[i]);
             }
         }
         userBalance[msg.sender] -= amountToSplit;
