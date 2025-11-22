@@ -9,6 +9,7 @@ contract Payer {
     IERC20 public token = IERC20(0x3600000000000000000000000000000000000000);
 
     uint public minDeposit = 0.5 * 10 ** 6; // Set for 6 decimals (USDC standard)
+    uint public walletBal = token.balanceOf(msg.sender);
     
     mapping(address => uint) public userBalance;
     uint public amountToSplit = 0;
@@ -16,7 +17,6 @@ contract Payer {
     //Deposit to contract
     function deposit(uint _amount) public payable {
         require(_amount >= minDeposit, "Deposit must be greater than minDeposit");
-        uint walletBal = token.balanceOf(msg.sender);
         require(walletBal >= _amount, "Wallet balance is low");
         token.safeTransferFrom(msg.sender, address(this), _amount);
         userBalance[msg.sender] += _amount;
