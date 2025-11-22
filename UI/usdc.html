@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payer DApp: Stablecoin Multisender</title>
+    <link rel="stylesheet" href="usdc.css">
+</head>
+<body>
+    <header>
+        <h1>💸 Payer DApp: Stablecoin Multisender</h1>
+        <button id="connectWalletBtn">Connect Wallet</button>
+    </header>
+
+    <!-- 
+    <div class="toast-container">
+    
+    </div>
+-->
+    <div id="status">
+        <h2>Connection Status</h2>
+        <p>Wallet: <span id="walletAddress">Not Connected</span></p>
+        <p>Deposited Balance: <span id="Deposited">0.00</span></p>
+    </div>
+
+    <div class="container">
+        
+        <section class="card">
+            <h2>💰 Deposit & Withdraw</h2>
+            <p class="hint">Min Deposit: <span id="minDeposit">5</span> USDC</p>
+            
+            <div class="input-group">
+                <input type="number" id="depositWithdrawAmount" placeholder="Enter Amount (e.g., 100)" min="0">
+            </div>
+
+            <div class="button-group">
+                <button id="depositBtn">1. Deposit</button>
+                <button id="withdrawBtn">2. Withdraw</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📤 Funds Splitting (Multisend)</h2>
+            <div class="input-group">
+                <input type="text" id="recipientAddressInput" placeholder="Recipient Address (0x...)" autocomplete="off">
+                <input type="number" id="sendAmountInput" placeholder="Amount" min="0">
+                <button id="addRecipientBtn">+ Add Recipient</button>
+            </div>
+            
+            <div id="recipientListContainer">
+                <h3>Recipients List</h3>
+                <ul id="recipientList">
+                    </ul>
+            </div>
+
+            <div class="multisend-footer">
+                <p>Total Sending Amount: <span id="totalSendingAmount">0.00</span></p>
+                <div class="button-group">
+                    <button id="resetInputBtn">Reset List</button>
+                    <button id="sendFundsBtn">Send Funds</button>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+     <!-- Ethers.js (browser build) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"
+      type="application/javascript"
+    ></script>
+
+    <script src="main.js"></script>
+</body>
+</html>
