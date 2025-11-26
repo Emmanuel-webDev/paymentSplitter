@@ -299,12 +299,11 @@ document.getElementById("connectWalletBtn").onclick = async () => {
       document.getElementById("walletAddress").innerText = `: ${userAddress}`;
 
       const tokenaddress = "0x3600000000000000000000000000000000000000"; // USDC contract address
-       tokenContract = new ethers.Contract(
-        tokenaddress,
-        ERC20_ABI,
-        signer
-      );
+      tokenContract = new ethers.Contract(tokenaddress, ERC20_ABI, signer);
       let symbol = await tokenContract.symbol();
+
+      //display wallet balance
+      await displayWalletBalance();
 
       //Display deposited balance after deposit/withdraw
       await displayContractBalance();
@@ -364,6 +363,12 @@ async function displayContractBalance() {
   document.getElementById("Deposited").innerText = `: ${depositedBal} USDC`;
 }
 
+//Display wallet balance
+async function displayWalletBalance() {
+  const walBal = await tokenContract.balanceOf(await signer.getAddress());
+  document.getElementById("WalletBalance").innerText = `${walBal / 1e6} USDC`;
+}
+
 // Deposit Button Handler
 document.getElementById("depositBtn").onclick = async () => {
   if (signer == null) {
@@ -399,10 +404,7 @@ document.getElementById("depositBtn").onclick = async () => {
   const walBal = await tokenContract.balanceOf(await signer.getAddress());
 
   if (amount > walBal) {
-    await showToast(
-      "Insufficient balance to withdraw the requested amount.",
-      "error"
-    );
+    await showToast("Insufficient wallet balance to deposit.", "error");
     document.getElementById("depositWithdrawAmount").value = "";
     return;
   }
@@ -410,6 +412,7 @@ document.getElementById("depositBtn").onclick = async () => {
   await contract.deposit(amount * 1e6);
   document.getElementById("depositWithdrawAmount").value = "";
   await displayContractBalance();
+  await displayWalletBalance();
   await showToast("Deposit successful!", "success");
 };
 
@@ -431,10 +434,7 @@ document.getElementById("withdrawBtn").onclick = async () => {
   const depositedBal = await contract.userBalance(await signer.getAddress());
 
   if (amount > depositedBal / 1e6) {
-    await showToast(
-      "Requested amount higher than deposited balance.",
-      "error"
-    );
+    await showToast("Requested amount higher than deposited balance.", "error");
     document.getElementById("depositWithdrawAmount").value = "";
     return;
   }
@@ -442,5 +442,90 @@ document.getElementById("withdrawBtn").onclick = async () => {
   await contract.withdraw(amount * 1e6);
   document.getElementById("depositWithdrawAmount").value = "";
   await displayContractBalance();
+  await displayWalletBalance();
   await showToast("Withdrawal successful!", "success");
+};
+
+const recipients = [];
+const amounts = [];
+
+//Add receipents Button Handler
+document.getElementById("addRecipientBtn").onclick = async () => {
+   if (signer == null) {
+    await showToast("Please connect your wallet first.", "warning");
+  } 
+  
+ 
+  const newRecipient = document.getElementById("recipientAddressInput").value;
+  const newAmount = document.getElementById("sendAmountInput").value;
+
+  if (!ethers.utils.isAddress(newRecipient)) {
+    await showToast("Please enter a valid recipient address.", "warning");
+    document.getElementById("recipientAddressInput").value = "";
+    return;
+  }
+
+  if (newAmount <= 0 || isNaN(newAmount)) {
+    await showToast("Please enter a valid amount to send.", "warning");
+    document.getElementById("sendAmountInput").value = "";
+    return;
+  }
+
+   if (recipients.includes(newRecipient)) {
+    await showToast("Recipient already added.", "warning");
+    document.getElementById("recipientAddressInput").value = "";
+    document.getElementById("sendAmountInput").value = "";
+    return;
+  } 
+
+
+  recipients.push(newRecipient);
+  amounts.push(newAmount);
+  document.getElementById("recipientAddressInput").value = "";
+  document.getElementById("sendAmountInput").value = "";
+  const list = document.getElementById("recipientList");
+  const listItem = document.createElement("li");
+  listItem.textContent = `Address: ${newRecipient}, Amount: ${newAmount} USDC`;
+  list.appendChild(listItem);
+
+  const totalAmount = amounts.reduce((acc, val) => acc + Number(val), 0);
+  document.getElementById("totalSendingAmount").innerText = `${totalAmount} USDC`;
+};
+
+//Reset List
+document.getElementById("resetInputBtn").onclick = async () => {
+  recipients.length = 0;
+  amounts.length = 0;
+  document.getElementById("totalSendingAmount").innerText = `0 USDC`;
+  document.getElementById("recipientList").innerHTML = "";
+  await showToast("Recipient list has been reset.", "info");
+}
+
+
+//Split Funds Button Handler
+document.getElementById("sendFundsBtn").onclick = async () => {
+  if (signer == null) {
+    await showToast("Please connect your wallet first.", "warning");
+    return;
+  }
+  if (recipients.length === 0) {
+    await showToast("Please add at least one recipient.", "warning");
+    return;
+  }
+
+  const totalAmount = amounts.reduce((acc, val) => acc + Number(val), 0);
+  const depositedBal = await contract.userBalance(await signer.getAddress());
+
+  if (totalAmount * 1e6 > depositedBal) {
+    await showToast("Insufficient deposited balance to split funds.", "error");
+    return;
+  }
+
+  await contract.splitFunds(recipients, amounts.map(a => a * 1e6));
+  recipients.length = 0;
+  amounts.length = 0;
+  document.getElementById("recipientList").innerHTML = "";
+  await displayContractBalance();
+  await displayWalletBalance();
+  await showToast("Funds split and sent successfully!", "success");
 };

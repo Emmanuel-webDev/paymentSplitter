@@ -51,10 +51,11 @@ h1 {
     font-size: 1.2em;
 }
 
-#walletAddress, #walletBalance, #Deposited {
+#walletAddress, #Deposited, #WalletBalance {
     font-weight: bold;
     color: var(--primary-color);
 }
+
 
 .container {
     display: grid;
@@ -139,6 +140,8 @@ button:disabled {
     list-style: none;
     padding: 0;
     margin-top: 15px;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 #recipientList h3 {
