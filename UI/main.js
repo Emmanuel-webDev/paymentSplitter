@@ -428,11 +428,11 @@ document.getElementById("withdrawBtn").onclick = async () => {
   }
 
   const amount = document.getElementById("depositWithdrawAmount").value;
-  const walBal = await tokenContract.balanceOf(await signer.getAddress());
+  const depositedBal = await contract.userBalance(await signer.getAddress());
 
-  if (amount > walBal) {
+  if (amount > depositedBal / 1e6) {
     await showToast(
-      "Requested amount higher than wallet balance.",
+      "Requested amount higher than deposited balance.",
       "error"
     );
     document.getElementById("depositWithdrawAmount").value = "";
