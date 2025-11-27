@@ -8,7 +8,7 @@ contract Payer {
     using SafeERC20 for IERC20;
     IERC20 public token = IERC20(0x3600000000000000000000000000000000000000);
 
-    uint public minDeposit = 0.5 * 10 ** 6; // Set for 6 decimals (USDC standard)
+    uint public minDeposit = 5 * 10 ** 6; // min deposit 5$, Set for 6 decimals (USDC standard)
     uint public walletBal = token.balanceOf(msg.sender);
     
     mapping(address => uint) public userBalance;
