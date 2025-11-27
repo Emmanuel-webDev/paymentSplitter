@@ -402,8 +402,9 @@ document.getElementById("depositBtn").onclick = async () => {
 
   const amount = document.getElementById("depositWithdrawAmount").value;
   const walBal = await tokenContract.balanceOf(await signer.getAddress());
+  const amountInSmallestUnits = ethers.utils.parseUnits(amount, 6);
 
-  if (amount > walBal) {
+  if (amountInSmallestUnits.gt(walBal)) {
     await showToast("Insufficient wallet balance to deposit.", "error");
     document.getElementById("depositWithdrawAmount").value = "";
     return;
@@ -455,7 +456,6 @@ document.getElementById("addRecipientBtn").onclick = async () => {
     await showToast("Please connect your wallet first.", "warning");
   } 
   
- 
   const newRecipient = document.getElementById("recipientAddressInput").value;
   const newAmount = document.getElementById("sendAmountInput").value;
 
@@ -478,6 +478,11 @@ document.getElementById("addRecipientBtn").onclick = async () => {
     return;
   } 
 
+  if (newAmount > (await contract.userBalance(await signer.getAddress())) / 1e6) {
+    await showToast("Amount exceeds your deposited balance.", "error");
+    document.getElementById("sendAmountInput").value = "";
+    return;
+  }
 
   recipients.push(newRecipient);
   amounts.push(newAmount);
@@ -489,6 +494,15 @@ document.getElementById("addRecipientBtn").onclick = async () => {
   list.appendChild(listItem);
 
   const totalAmount = amounts.reduce((acc, val) => acc + Number(val), 0);
+
+  if (totalAmount > (await contract.userBalance(await signer.getAddress())) / 1e6) {
+    await showToast("Total sending amount exceeds your deposited balance.", "error");
+    list.removeChild(listItem);
+    recipients.pop();
+    amounts.pop();
+    return;
+  }
+
   document.getElementById("totalSendingAmount").innerText = `${totalAmount} USDC`;
 };
 
@@ -525,6 +539,7 @@ document.getElementById("sendFundsBtn").onclick = async () => {
   recipients.length = 0;
   amounts.length = 0;
   document.getElementById("recipientList").innerHTML = "";
+  document.getElementById("totalSendingAmount").innerText = `0 USDC`;
   await displayContractBalance();
   await displayWalletBalance();
   await showToast("Funds split and sent successfully!", "success");
