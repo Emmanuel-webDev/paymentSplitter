@@ -34,6 +34,9 @@ header {
 h1 {
     color: var(--primary-dark);
     font-size: 1.8em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 /* --- Status Section --- */

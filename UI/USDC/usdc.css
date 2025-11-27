@@ -1,0 +1,219 @@
+:root {
+    --primary-color: #3f51b5;
+    --primary-dark: #303f9f;
+    --text-color: #333;
+    --bg-color: #f4f7f6;
+    --card-bg: #fff;
+    --border-radius: 8px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 2px solid #ddd;
+}
+
+h1 {
+    color: var(--primary-dark);
+    font-size: 1.8em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* --- Status Section --- */
+#status {
+    background-color: #e8eaf6;
+    border: 1px solid #c5cae9;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 30px;
+}
+
+#status h2 {
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+#walletAddress, #Deposited, #WalletBalance {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+}
+
+/* --- Card Styling --- */
+.card {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.card h2 {
+    color: var(--primary-dark);
+    margin-bottom: 15px;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 10px;
+}
+
+.hint {
+    font-size: 0.9em;
+    color: #6a6a6a;
+    margin-bottom: 10px;
+}
+
+/* --- Inputs and Buttons --- */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+input[type="text"], input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex-grow: 1;
+}
+
+.button-group button, header button, .multisend-footer button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+/* Primary Button Style */
+#connectWalletBtn, #depositBtn, #addRecipientBtn, #sendFundsBtn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#connectWalletBtn:hover, #depositBtn:hover, #addRecipientBtn:hover, #sendFundsBtn:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Secondary Button Style */
+#approveBtn, #withdrawBtn, #resetInputBtn {
+    background-color: #f0f0f0;
+    color: var(--text-color);
+    border: 1px solid #ccc;
+}
+
+#approveBtn:hover, #withdrawBtn:hover, #resetInputBtn:hover {
+    background-color: #e0e0e0;
+}
+
+/* Disabled State */
+button:disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed;
+}
+
+/* --- Recipient List --- */
+#recipientList {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#recipientList h3 {
+    font-size: 1em;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+#recipientList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    background-color: #f9f9f9;
+    border-left: 5px solid var(--primary-color);
+    border-radius: 4px;
+}
+
+#recipientList li button {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.8em;
+    line-height: 1;
+}
+
+.multisend-footer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #eee;
+}
+
+.multisend-footer p {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.toast-container {
+    background-color:#3f51b5;
+    padding: 20px 30px;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    position: fixed;
+    top: 7%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.toast-success {
+    background-color: #4CAF50; /* Green */
+    border: 1px solid #388E3C;
+}
+
+.toast-error {
+    background-color: #F44336; /* Red */
+    border: 1px solid #D32F2F;
+}
+
+.toast-warning {
+    background-color: #FFC107; /* Amber/Yellow */
+    color: #333; /* Darker text for light background */
+    border: 1px solid #FFA000;
+}
+
+.toast-info {
+    background-color: #2196F3; /* Blue */
+    border: 1px solid #1976D2;
+}
