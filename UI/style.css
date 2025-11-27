@@ -1,0 +1,198 @@
+      :root {
+        --color-lavender-bg: #F8F7FF; /* Light pale purple for background */
+        --color-primary-purple: #5E35B1; /* Deep purple for logo/accents */
+        --color-text-dark: #1A1A2E; /* Very dark text for contrast */
+        --color-text-light: #9B8DBE; /* Lighter purple/gray for body text */
+      }
+
+      /* --- General Reset and Typography --- */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Modern Sans-Serif */
+      }
+
+      body {
+        background-color: var(--color-lavender-bg);
+        color: var(--color-text-dark);
+        line-height: 1.6;
+        padding-bottom: 50px; /* Space for the footer section */
+      }
+
+      /* --- Header and Navigation --- */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 50px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header h1 {
+        font-size: 36px;
+        color: var(--color-primary-purple);
+        font-weight: 700;
+      }
+
+      header nav ul {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+      }
+
+      header nav a {
+        text-decoration: none;
+        color: var(--color-text-dark);
+        font-size: 16px;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      header nav a:hover {
+        color: var(--color-primary-purple);
+      }
+
+      /* --- Main Hero Content Layout (2-Column) --- */
+      .text {
+        display: flex;
+        flex-wrap: wrap; 
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 50px;
+        align-items: flex-start; /* Align the text content to the top */
+      }
+
+      /* Left Side Content: Hero Text & Buttons */
+      .text > section:not(.img) {
+          width: 50%;
+          min-width: 300px;
+          padding-right: 40px;
+      }
+
+      /* Right Side Content: Image */
+      .text > .img {
+          width: 50%;
+          display: flex;
+          justify-content: flex-end;
+      }
+
+      .text section:first-child {
+          padding-top: 40px;
+      }
+      
+      .text section:first-child h2 {
+        font-size: 68px;
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 20px;
+        color: var(--color-text-dark);
+      }
+
+      .text section:first-child p {
+        font-size: 20px;
+        color: var(--color-text-light);
+        margin-bottom: 50px;
+        max-width: 500px;
+      }
+
+
+      .get-started button {
+        background-color: var(--color-primary-purple);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        margin-right: 15px;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.1s;
+      }
+
+      .get-started button a {
+          text-decoration: none;
+          color: white;
+      }
+
+      .get-started button:hover {
+        background-color: #4C2B95;
+      }
+
+      .get-started button:active {
+          transform: scale(0.98);
+      }
+
+      /* --- Image Styling --- */
+      .home-hero__img {
+        max-width: 90%;
+        height: auto;
+      }
+
+      /* --- About Us Section --- */
+      .about-us {
+        text-align: center;
+        padding: 50px 20px;
+        margin-top: 50px;
+        background-color: white; /* Make this section stand out */
+      }
+
+      .about-us h2 {
+        font-size: 30px;
+        color: var(--color-text-dark);
+        margin-bottom: 10px;
+      }
+
+      .about-us p {
+        color: var(--color-text-light);
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      /* --- Media Queries for Responsiveness (Stack columns on smaller screens) --- */
+      @media (max-width: 992px) {
+        .text {
+          flex-direction: column; 
+          align-items: center;
+        }
+        
+        .text > section:not(.img),
+        .text > .img {
+          width: 100%;
+          margin-bottom: 40px;
+          text-align: center;
+          padding-right: 0;
+        }
+
+        .text > .img {
+            justify-content: center; 
+        }
+
+        .text section:first-child h2 {
+            font-size: 48px;
+        }
+      }
+
+      @media (max-width: 600px) {
+          header {
+              padding: 15px 20px;
+          }
+
+          header nav {
+              display: none; 
+          }
+
+          .text {
+              padding: 0 20px;
+          }
+
+          .text section:first-child h2 {
+              font-size: 36px;
+          }
+          
+          .get-started button {
+              font-size: 16px;
+              padding: 10px 20px;
+          }
+      }
