@@ -1,132 +1,132 @@
 let contractAddress = "0xA2f175bAE8D9E2c2F8cA717F20FD3f07E2E4fc3e";
 
 let contractABI = [
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			}
-		],
-		"name": "deposit",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "token",
-				"type": "address"
-			}
-		],
-		"name": "SafeERC20FailedOperation",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address payable[]",
-				"name": "recipents",
-				"type": "address[]"
-			},
-			{
-				"internalType": "uint32[]",
-				"name": "amounts",
-				"type": "uint32[]"
-			}
-		],
-		"name": "splitFunds",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			}
-		],
-		"name": "withdraw",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "amountToSplit",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "minDeposit",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "token",
-		"outputs": [
-			{
-				"internalType": "contract IERC20",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "userBalance",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "walletBal",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "deposit",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+    ],
+    name: "SafeERC20FailedOperation",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address payable[]",
+        name: "recipents",
+        type: "address[]",
+      },
+      {
+        internalType: "uint32[]",
+        name: "amounts",
+        type: "uint32[]",
+      },
+    ],
+    name: "splitFunds",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "withdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "amountToSplit",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "minDeposit",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "token",
+    outputs: [
+      {
+        internalType: "contract IERC20",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "userBalance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "walletBal",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ];
 
 const ERC20_ABI = [
@@ -263,7 +263,7 @@ document.getElementById("connectWalletBtn").onclick = async () => {
         // Try switching the network
         await window.ethereum.request({
           method: "wallet_switchEthereumChain",
-          params: [{ chainId: "5042002" }],
+          params: [{ chainId: "0x4cef52" }],
         });
       } catch (switchError) {
         if (switchError.code === 4902) {
@@ -272,14 +272,14 @@ document.getElementById("connectWalletBtn").onclick = async () => {
               method: "wallet_addEthereumChain",
               params: [
                 {
-                  chainId: "5042002",
+                  chainId: "0x4cef52", // <--- CORRECTED: Must be 0x-prefixed hexadecimal
                   chainName: "Arc Testnet",
                   nativeCurrency: {
                     name: "USDC",
-                    symbol: "USDC",
+                    symbol: "USDC", // <--- CONFIRMED: Symbol is USDC
                     decimals: 18,
                   },
-                  rpcUrls: ["https://rpc.testnet.arc.network"],
+                  rpcUrls: ["https://rpc.testnet.arc.network"], // Using the primary RPC
                   blockExplorerUrls: ["https://testnet.arcscan.app"],
                 },
               ],
@@ -300,7 +300,6 @@ document.getElementById("connectWalletBtn").onclick = async () => {
 
       const tokenaddress = "0x3600000000000000000000000000000000000000"; // USDC contract address
       tokenContract = new ethers.Contract(tokenaddress, ERC20_ABI, signer);
-      let symbol = await tokenContract.symbol();
 
       //display wallet balance
       await displayWalletBalance();
@@ -452,10 +451,10 @@ const amounts = [];
 
 //Add receipents Button Handler
 document.getElementById("addRecipientBtn").onclick = async () => {
-   if (signer == null) {
+  if (signer == null) {
     await showToast("Please connect your wallet first.", "warning");
-  } 
-  
+  }
+
   const newRecipient = document.getElementById("recipientAddressInput").value;
   const newAmount = document.getElementById("sendAmountInput").value;
 
@@ -471,14 +470,17 @@ document.getElementById("addRecipientBtn").onclick = async () => {
     return;
   }
 
-   if (recipients.includes(newRecipient)) {
+  if (recipients.includes(newRecipient)) {
     await showToast("Recipient already added.", "warning");
     document.getElementById("recipientAddressInput").value = "";
     document.getElementById("sendAmountInput").value = "";
     return;
-  } 
+  }
 
-  if (newAmount > (await contract.userBalance(await signer.getAddress())) / 1e6) {
+  if (
+    newAmount >
+    (await contract.userBalance(await signer.getAddress())) / 1e6
+  ) {
     await showToast("Amount exceeds your deposited balance.", "error");
     document.getElementById("sendAmountInput").value = "";
     return;
@@ -495,15 +497,23 @@ document.getElementById("addRecipientBtn").onclick = async () => {
 
   const totalAmount = amounts.reduce((acc, val) => acc + Number(val), 0);
 
-  if (totalAmount > (await contract.userBalance(await signer.getAddress())) / 1e6) {
-    await showToast("Total sending amount exceeds your deposited balance.", "error");
+  if (
+    totalAmount >
+    (await contract.userBalance(await signer.getAddress())) / 1e6
+  ) {
+    await showToast(
+      "Total sending amount exceeds your deposited balance.",
+      "error"
+    );
     list.removeChild(listItem);
     recipients.pop();
     amounts.pop();
     return;
   }
 
-  document.getElementById("totalSendingAmount").innerText = `${totalAmount} USDC`;
+  document.getElementById(
+    "totalSendingAmount"
+  ).innerText = `${totalAmount} USDC`;
 };
 
 //Reset List
@@ -513,8 +523,7 @@ document.getElementById("resetInputBtn").onclick = async () => {
   document.getElementById("totalSendingAmount").innerText = `0 USDC`;
   document.getElementById("recipientList").innerHTML = "";
   await showToast("Recipient list has been reset.", "info");
-}
-
+};
 
 //Split Funds Button Handler
 document.getElementById("sendFundsBtn").onclick = async () => {
@@ -535,7 +544,10 @@ document.getElementById("sendFundsBtn").onclick = async () => {
     return;
   }
 
-  await contract.splitFunds(recipients, amounts.map(a => a * 1e6));
+  await contract.splitFunds(
+    recipients,
+    amounts.map((a) => a * 1e6)
+  );
   recipients.length = 0;
   amounts.length = 0;
   document.getElementById("recipientList").innerHTML = "";

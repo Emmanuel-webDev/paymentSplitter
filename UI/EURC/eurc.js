@@ -263,7 +263,7 @@ document.getElementById("connectWalletBtn").onclick = async () => {
         // Try switching the network
         await window.ethereum.request({
           method: "wallet_switchEthereumChain",
-          params: [{ chainId: "5042002" }],
+          params: [{ chainId: "0x4cef52" }],
         });
       } catch (switchError) {
         if (switchError.code === 4902) {
@@ -272,7 +272,7 @@ document.getElementById("connectWalletBtn").onclick = async () => {
               method: "wallet_addEthereumChain",
               params: [
                 {
-                  chainId: "5042002",
+                  chainId: "0x4cef52",
                   chainName: "Arc Testnet",
                   nativeCurrency: {
                     name: "USDC",
