@@ -327,7 +327,7 @@ async function approveToken() {
     );
     await tx.wait();
   } catch (err) {
-    if (err.code === 4001) {
+    if (err) {
       await showToast("Token approval is required to proceed.", "error");
       window.location.reload();
     }
