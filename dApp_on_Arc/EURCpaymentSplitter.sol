@@ -9,14 +9,16 @@ contract Payer {
     IERC20 public token = IERC20(0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a);
 
     uint public minDeposit = 5 * 10 ** 6; // Set for 6 decimals (USDC standard)
-     uint walletBal = token.balanceOf(msg.sender);
-    
+    uint walletBal = token.balanceOf(msg.sender);
+
     mapping(address => uint) public userBalance;
-    uint public amountToSplit = 0;
 
     //Deposit to contract
     function deposit(uint _amount) public {
-        require(_amount >= minDeposit, "Deposit must be greater than minDeposit");
+        require(
+            _amount >= minDeposit,
+            "Deposit must be greater than minDeposit"
+        );
         require(walletBal >= _amount, "Wallet balance is low");
         token.safeTransferFrom(msg.sender, address(this), _amount);
         userBalance[msg.sender] += _amount;
@@ -35,27 +37,35 @@ contract Payer {
     }
 
     //Funds splitter
-    function splitFunds(address payable[] memory recipents, uint32[] memory amounts) public {
+    function splitFunds(
+        address payable[] memory recipents,
+        uint32[] memory amounts
+    ) public {
         require(userBalance[msg.sender] > 0, "Insufficient balance to split");
-        require(recipents.length == amounts.length, "Recipents and percents must be the same length");
+        require(
+            recipents.length == amounts.length,
+            "Recipents and percents must be the same length"
+        );
         require(recipents.length > 0, "Recipents must be greater than 0");
         require(amounts.length > 0, "Percents must be greater than 0");
+        uint amountToSplit = 0;
 
-    
         for (uint i = 0; i < amounts.length; i++) {
             amountToSplit += amounts[i];
         }
 
-        require(amountToSplit <= userBalance[msg.sender], "Amount to split is greater than your balance");
+        require(
+            amountToSplit <= userBalance[msg.sender],
+            "Amount to split is greater than your balance"
+        );
+
+        userBalance[msg.sender] -= amountToSplit;
 
         //Fund distributor loop
         for (uint i = 0; i < recipents.length; i++) {
-
             if (amounts[i] > 0) {
                 token.safeTransfer(recipents[i], amounts[i]);
             }
         }
-        userBalance[msg.sender] -= amountToSplit;
-        amountToSplit = 0;
     }
 }
