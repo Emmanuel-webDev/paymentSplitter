@@ -1,4 +1,4 @@
-let contractAddress = "0xA2f175bAE8D9E2c2F8cA717F20FD3f07E2E4fc3e";
+let contractAddress = "0xA8DdEa50e69966BCDEc5fED4EF5a800071e45B2a";
 
 let contractABI = [
   {
@@ -11,7 +11,7 @@ let contractABI = [
     ],
     name: "deposit",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -40,7 +40,7 @@ let contractABI = [
     ],
     name: "splitFunds",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
