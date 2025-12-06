@@ -1,4 +1,4 @@
-let contractAddress = "0x210993D4C7bcC141879D78778FE383Bf9E58F40B";
+let contractAddress = "0x5a7e3CDd7A0A7d3f309196A4A72BB90f8f3E2C6C"; // EURC Splitter contract address
 
 let contractABI = [
   {
@@ -54,19 +54,6 @@ let contractABI = [
     name: "withdraw",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "amountToSplit",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
     type: "function",
   },
   {

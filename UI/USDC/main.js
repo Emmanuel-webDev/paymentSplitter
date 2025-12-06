@@ -1,4 +1,4 @@
-let contractAddress = "0xA8DdEa50e69966BCDEc5fED4EF5a800071e45B2a";
+let contractAddress = "0x3FbEDD6acc079dBB434De3AE27e712D65c55386B";
 
 let contractABI = [
   {
@@ -54,19 +54,6 @@ let contractABI = [
     name: "withdraw",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "amountToSplit",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
     type: "function",
   },
   {
