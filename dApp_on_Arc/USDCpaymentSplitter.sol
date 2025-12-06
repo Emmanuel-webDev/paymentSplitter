@@ -15,7 +15,7 @@ contract Payer {
     uint public amountToSplit = 0;
 
     //Deposit to contract
-    function deposit(uint _amount) public payable {
+    function deposit(uint _amount) public {
         require(_amount >= minDeposit, "Deposit must be greater than minDeposit");
         require(walletBal >= _amount, "Wallet balance is low");
         token.safeTransferFrom(msg.sender, address(this), _amount);
@@ -35,7 +35,7 @@ contract Payer {
     }
 
     //Funds splitter
-    function splitFunds(address payable[] memory recipents, uint32[] memory amounts) public payable {
+    function splitFunds(address payable[] memory recipents, uint32[] memory amounts) public {
         require(userBalance[msg.sender] > 0, "Insufficient balance to split");
         require(recipents.length == amounts.length, "Recipents and percents must be the same length");
         require(recipents.length > 0, "Recipents must be greater than 0");
@@ -46,6 +46,8 @@ contract Payer {
             amountToSplit += amounts[i];
         }
 
+        require(amountToSplit <= userBalance[msg.sender], "Amount to send is higher than deposited balance");
+
         //Fund distributor loop
         for (uint i = 0; i < recipents.length; i++) {
 
@@ -54,5 +56,6 @@ contract Payer {
             }
         }
         userBalance[msg.sender] -= amountToSplit;
+        amountToSplit = 0;
     }
 }
